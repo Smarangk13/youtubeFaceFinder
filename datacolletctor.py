@@ -1,7 +1,7 @@
 from selenium import webdriver
 import cv2
 import time
-from faceScraper import faceshot
+from youtubeFaceFinder import faceshot
 
 class webDrive:
     def __init__(self):
