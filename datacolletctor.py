@@ -1,7 +1,7 @@
 from selenium import webdriver
 import cv2
 import time
-from youtubeFaceFinder import faceshot
+from dataScraper import faceshot
 
 class webDrive:
     def __init__(self):
@@ -32,7 +32,7 @@ class webDrive:
                 cname = driver.find_element_by_xpath(
                     '/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[3]/div[1]/div/div[7]/div[3]/ytd-video-secondary-info-renderer/div/div[2]/ytd-video-owner-renderer/div[1]/div/yt-formatted-string/a')
                 chName = (cname.get_attribute('text'))
-                self.face.isFace(chName,30,2)
+                self.face.isFaceScreen(chName,30,2)
 
                 time.sleep(4)
                 driver.back()

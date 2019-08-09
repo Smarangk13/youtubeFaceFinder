@@ -9,7 +9,7 @@ class faceFinder:
     def __init__(self):
         self.face_cascade = cv2.CascadeClassifier('face.xml')
 
-    def isFace(self,folderName='',timeout=540,facesNeed = 5,sleeptime=5):
+    def isFaceScreen(self,folderName='',timeout=540,facesNeed = 5,sleeptime=5):
         t = time.time()
         cwd = os.getcwd()
         faceFound = 0
@@ -46,6 +46,45 @@ class faceFinder:
                 os.chdir(cwd)
                 return 0
 
+    def isFaceVideo(self,VideoName,facesNeed = 5,sleeptime=5,faceFound = 0):
+        t = time.time()
+        cwd = os.getcwd()
+
+        cap = cv2.VideoCapture(VideoName)
+        print("opened Video")
+
+        while(cap.isOpened()):
+            ret, frame = cap.read()
+
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            faces = self.face_cascade.detectMultiScale(gray,1.1,5)
+
+            for (x,y,w,h) in faces:
+                cv2.imwrite("face"+str(faceFound+1)+".jpeg",frame)
+                # img = Image.Image
+                # img.save(folderName+"face"+str(faceFound+1)+".jpeg")
+                print("FACE FOUND-",faceFound)
+                # cv2.imshow('face',printscreen_numpy)
+
+                faceFound += 1
+
+                time.sleep(sleeptime)
+                if(faceFound>=facesNeed):
+                    os.chdir(cwd)
+                    cap.release()
+                    cv2.destroyAllWindows()
+                    return
+            # cv2.imshow('frame',gray)
+            # if cv2.waitKey(1) & 0xFF == ord('q'):
+                # break
+
+        cap.release()
+        cv2.destroyAllWindows()
+        return
+
+
+
 if __name__=="__main__":
     f = faceFinder()
-    f.isFace('test1')
+    f.isFaceVideo('5 Fast and Easy Makeup Looks for Work   Makeup Geek.webm','Data/MarlenaStellMakeupGeek/')
